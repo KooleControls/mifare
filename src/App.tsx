@@ -45,8 +45,12 @@ export function App() {
   const lookup = useCallback(
     (uid: string) => {
       const normalized = uid.replace(/:/g, "").toUpperCase()
+      // reverse byte order: e.g. A1B2C3D4 -> D4C3B2A1
+      const bytes = normalized.match(/.{1,2}/g) || []
+      const reversed = bytes.length ? bytes.reverse().join("") : normalized
       setScannedUid(normalized)
-      const card = cards.find((c) => c.uid === normalized)
+      // Try reversed (CSV stored in reversed byte order), fall back to direct match
+      const card = cards.find((c) => c.uid === reversed) || cards.find((c) => c.uid === normalized)
       if (card) {
         setResult(card)
         setNotFound(false)
