@@ -37,7 +37,9 @@ export function App() {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    fetch(import.meta.env.BASE_URL + "beurten.csv")
+    fetch(`${import.meta.env.BASE_URL}beurten.csv?v=${__COMMIT_SHA__}`, {
+      cache: "no-cache",
+    })
       .then((r) => r.text())
       .then((t) => setCards(parseCSV(t)))
       .catch(() => setError("Failed to load beurten.csv"))
