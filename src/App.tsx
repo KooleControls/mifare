@@ -5,24 +5,25 @@ interface CardInfo {
   uid: string
   total: number
   expiry: string
-  used: number
   remaining: number
+  used: number
+  type: string
 }
 
 function parseCSV(text: string): CardInfo[] {
   return text
     .trim()
     .split("\n")
+    .slice(1) // skip header row
     .map((line) => {
-      const [uid, total, expiry, used] = line.split(";")
-      const t = parseInt(total)
-      const u = parseInt(used)
+      const [uid, total, expiry, remaining, used, type] = line.split(";")
       return {
         uid: uid.trim().toUpperCase(),
-        total: t,
+        total: parseInt(total),
         expiry: expiry.trim(),
-        used: u,
-        remaining: t - u,
+        remaining: parseInt(remaining),
+        used: parseInt(used),
+        type: (type ?? "").trim(),
       }
     })
 }
@@ -134,6 +135,10 @@ export function App() {
               <>
                 <div className="text-xs text-muted-foreground">UID</div>
                 <div className="mt-1 font-mono text-sm">{result.uid}</div>
+
+                {result.type && (
+                  <div className="mt-2 text-sm font-medium">{result.type}</div>
+                )}
 
                 <div className="mt-4 text-xs text-muted-foreground">
                   Remaining
