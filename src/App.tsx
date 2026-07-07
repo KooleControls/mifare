@@ -122,6 +122,10 @@ export function App() {
         </Button>
       </div>
 
+      <div className="fixed bottom-2 left-0 right-0 text-center font-mono text-xs text-muted-foreground">
+        {__COMMIT_SHA__}
+      </div>
+
       {showModal && (
         <div
           className="fixed inset-0 z-50 flex items-center justify-center bg-black/60"
