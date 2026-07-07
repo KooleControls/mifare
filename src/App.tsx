@@ -143,7 +143,12 @@ export function App() {
                 <div className="mt-1 font-mono text-sm">{result.uid}</div>
 
                 {result.type && (
-                  <div className="mt-2 text-sm font-medium">{result.type}</div>
+                  <>
+                    <div className="mt-4 text-xs text-muted-foreground">
+                      Type
+                    </div>
+                    <div className="mt-1 text-sm font-medium">{result.type}</div>
+                  </>
                 )}
 
                 <div className="mt-4 text-xs text-muted-foreground">
